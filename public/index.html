@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codenames</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+      <h1>CODENAMES</h1>
+      <div class="login-form">
+        <input type="text" id="nickname-input" placeholder="Seu apelido" maxlength="20">
+        <button id="join-btn">Entrar no Lobby</button>
+      </div>
+      <p id="login-error" class="error"></p>
+    </div>
+
+    <!-- Lobby Screen -->
+    <div id="lobby-screen" class="screen hidden">
+      <h1>LOBBY</h1>
+      <div class="lobby-container">
+        <div class="players-list">
+          <h3>Jogadores</h3>
+          <ul id="players-list"></ul>
+        </div>
+        
+        <div class="team-selection">
+          <div class="team-box red-team">
+            <h3>Time Vermelho</h3>
+            <div class="role-selection">
+              <button class="role-btn" data-team="red" data-role="spymaster">Spymaster</button>
+              <button class="role-btn" data-team="red" data-role="operative">Operativo</button>
+            </div>
+            <div class="team-players" id="red-players"></div>
+          </div>
+          
+          <div class="team-box blue-team">
+            <h3>Time Azul</h3>
+            <div class="role-selection">
+              <button class="role-btn" data-team="blue" data-role="spymaster">Spymaster</button>
+              <button class="role-btn" data-team="blue" data-role="operative">Operativo</button>
+            </div>
+            <div class="team-players" id="blue-players"></div>
+          </div>
+
+          <div class="team-box neutral-team">
+            <h3>Espectador</h3>
+            <button class="role-btn" data-team="neutral">Observar</button>
+            <div class="team-players" id="neutral-players"></div>
+          </div>
+        </div>
+
+        <div class="lobby-actions">
+          <button id="ready-btn">Pronto</button>
+          <button id="start-btn" class="hidden">Iniciar Jogo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+      <div class="game-header">
+        <div class="player-info" id="player-info"></div>
+        <div class="team-indicator" id="team-indicator">
+          <span class="turn-dot"></span>
+          <span id="turn-text">Turno: Vermelho</span>
+        </div>
+        <div class="scores">
+          <div class="score red-score">
+            <span class="score-label">Vermelho</span>
+            <span class="score-value" id="red-score">0</span>
+            <span class="score-target">/ 9</span>
+          </div>
+          <div class="score blue-score">
+            <span class="score-label">Azul</span>
+            <span class="score-value" id="blue-score">0</span>
+            <span class="score-target">/ 8</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="clue-area" id="clue-area">
+        <div class="clue-display" id="clue-display">
+          <span class="clue-word" id="clue-word">---</span>
+          <span class="clue-number" id="clue-number"></span>
+        </div>
+        <p class="clue-spymaster" id="clue-spymaster"></p>
+      </div>
+
+      <div class="spymaster-controls hidden" id="spymaster-controls">
+        <div class="clue-form">
+          <input type="text" id="clue-input" placeholder="Palavra" maxlength="20">
+          <input type="number" id="clue-number-input" placeholder="N" min="1" max="9">
+          <button id="give-clue-btn">Dar Dica</button>
+        </div>
+      </div>
+
+      <div class="operative-controls hidden" id="operative-controls">
+        <p class="instructions">Selecione uma carta e clique em Verificar</p>
+        <div class="guess-info" id="guess-info"></div>
+        <button id="verify-btn" disabled>Verificar</button>
+        <button id="pass-btn">Passar Vez</button>
+      </div>
+
+      <div class="game-board" id="game-board"></div>
+
+      <div class="game-actions">
+        <button id="new-game-btn" class="hidden">Nova Partida</button>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="gameover-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="gameover-title">Fim de Jogo!</h2>
+        <p id="gameover-message"></p>
+        <button id="gameover-new-game-btn">Nova Partida</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
